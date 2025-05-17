@@ -12,7 +12,7 @@ export const OptionsMeetingComponent: FC<IOptionsMeetingComponentProps> = () => 
 
 
     return (
-        <div className="">
+        <div className="flex flex-row gap-2">
             <Button variant={"default"}>
                 Aceitar 
             </Button>
