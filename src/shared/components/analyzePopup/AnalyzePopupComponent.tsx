@@ -1,50 +1,56 @@
 import type { FC } from "react";
 import { Button } from "@/components/ui/button"
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
 } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import type { IMeeting } from "@/shared/interfaces/IMeeting";
+import { Badge } from "@/components/ui/badge";
+import { useAnalyzePopupFunctions } from "./AnalyzePopup.Functions";
+import { Textarea } from "@/components/ui/textarea"
 
 
-export const AnalyzePopupComponent: FC = () => {
+interface AnalyzePopupComponentProps {
+    meeting: IMeeting
+}
 
+export const AnalyzePopupComponent: FC<AnalyzePopupComponentProps> = ({ meeting }) => {
+    const { getStatusColor } = useAnalyzePopupFunctions();
     return (
-        <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="outline">Edit Profile</Button>
-      </DialogTrigger>
-      <DialogContent className="w-[90vw] h-[90vh]">
-        <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
-          <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
-          </DialogDescription>
-        </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
-            <Input id="name" value="Pedro Duarte" className="col-span-3" />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Username
-            </Label>
-            <Input id="username" value="@peduarte" className="col-span-3" />
-          </div>
-        </div>
-        <DialogFooter>
-          <Button type="submit">Save changes</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        <DialogContent className="max-w-[90vw] max-h-[90vh] flex flex-col gap-4">
+            <DialogHeader>
+                <DialogTitle>{meeting.title}</DialogTitle>
+                <div className="flex justify-between">
+                    <p><strong>Horário:</strong> {meeting.time}</p>
+                    <p><strong>Status:</strong> <Badge className={getStatusColor(meeting.rating)}>{meeting.rating}</Badge></p>
+                </div>
+                <DialogDescription>
+                    <div>
+                        <h4 className="font-medium mb-2">Descrição</h4>
+                        <p>{meeting.description}</p>
+                    </div>
+                </DialogDescription>
+            </DialogHeader>
+            <div className="mt-8">
+                <Textarea className="h-[150px] resize-none"  placeholder="Cole a Transcrição da Reunião Aqui..." />
+            </div>
+            <div className="flex flex-col gap-4 mb-8">
+                <div className="h-[350px] rounded-md border border-gray-200 p-4">
+                    <h4 className="font-medium mb-2">Resultado da Análise</h4>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+                </div>
+                
+                
+            </div>
+            <DialogFooter>
+                <DialogClose asChild>
+                    <Button variant="outline">Fechar</Button>
+                </DialogClose>
+            </DialogFooter>
+        </DialogContent>
     )
 }
