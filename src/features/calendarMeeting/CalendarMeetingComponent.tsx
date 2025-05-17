@@ -11,11 +11,7 @@ export const CalendarMeetingComponent: FC = () => {
     return (
         <>
             <CalendarComponent
-                meetingIndividualActions={isMeetingActionsEnabled ? (meeting) => (
-                    <OptionsMeetingComponent
-                        meeting={meeting}
-                    />
-                 ): undefined}
+
             />
         </>
     )

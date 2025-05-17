@@ -1,6 +1,11 @@
 import { MeetingsMock } from "@/mocks/MeetingMock"
+import type { EventsDto } from "@/shared/dtos/EventsDto"
 import { RaitingMeetingEnum } from "@/shared/enums/RaitingMeetingEnum"
 import type { IMeeting } from "@/shared/interfaces/IMeeting"
+import { CalendarService } from "@/shared/services/CalendarService"
+import Axios from "@/shared/utils/Axios"
+// import { CalendarService } from "@/shared/services/CalendarService"
+import { format, getMonth, getYear } from 'date-fns'
 import { useEffect, useState } from "react"
 
 export const useCalendarFunctions = () => {
@@ -8,13 +13,39 @@ export const useCalendarFunctions = () => {
     const [currentMonth, setCurrentMonth] = useState(new Date())
     const [selectedDate, setSelectedDate] = useState<Date | null>(new Date())
     const [meetingData, setMeetingData] = useState<IMeeting[]>([]);
+    const actualDate = () => {
+        const date = new Date();
+        return format(date, 'yyyy-MM')
+    }
+
+    const { getEvents } = CalendarService(Axios);
 
     useEffect(() => {
-        loadingMeetings()
-    },[])
+        loadingMeetings(actualDate())
+    }, [])
 
-    const loadingMeetings = () => {
-        setMeetingData(MeetingsMock)
+    const loadingMeetings = (date: string) => {
+        getEvents(date)
+        .then((response) => {
+            console.log('bbbbbbbb ::> ', response.data.itens)
+            const teste = formatCalendar(response.data.itens);
+            console.log('aaaaa ::> ', teste)
+            setMeetingData(formatCalendar(response.data.itens))
+        })
+    }
+
+    const formatCalendar = (data: EventsDto[]): IMeeting[] => {
+        return data.map((value) => {
+            return {
+                id: value.id,
+                title: value.details.title,
+                description: value.details.description,
+                status: value.details.status,
+                rating: value.details.transcriptionRating,
+                date: new Date(value.details.date),
+                time: value.details.time
+            }
+        })
     }
 
     const getStatusColor = (status: RaitingMeetingEnum) => {
