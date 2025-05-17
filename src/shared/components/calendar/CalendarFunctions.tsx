@@ -1,6 +1,7 @@
-import { MeetingStatusEnum } from "@/shared/enums/MeetingStatusEnum"
+import { MeetingsMock } from "@/mocks/MeetingMock"
+import { RaitingMeetingEnum } from "@/shared/enums/RaitingMeetingEnum"
 import type { IMeeting } from "@/shared/interfaces/IMeeting"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export const useCalendarFunctions = () => {
 
@@ -8,36 +9,40 @@ export const useCalendarFunctions = () => {
     const [selectedDate, setSelectedDate] = useState<Date | null>(new Date())
     const [meetingData, setMeetingData] = useState<IMeeting[]>([]);
 
-    const formatMeeting = () => {
+    useEffect(() => {
+        loadingMeetings()
+    },[])
 
+    const loadingMeetings = () => {
+        setMeetingData(MeetingsMock)
     }
 
-    const getStatusColor = (status: MeetingStatusEnum) => {
+    const getStatusColor = (status: RaitingMeetingEnum) => {
         switch (status) {
-            case MeetingStatusEnum.MUITO_UTIL:
+            case RaitingMeetingEnum.MUITO_UTIL:
                 return "bg-green-500 hover:bg-green-600"
-            case MeetingStatusEnum.UTIL:
+            case RaitingMeetingEnum.UTIL:
                 return "bg-blue-500 hover:bg-blue-600"
-            case MeetingStatusEnum.INUTIL:
+            case RaitingMeetingEnum.INUTIL:
                 return "bg-amber-500 hover:bg-amber-600"
-            case MeetingStatusEnum.IMPRATICAVEL:
+            case RaitingMeetingEnum.IMPRATICAVEL:
                 return "bg-red-500 hover:bg-red-600"
             default:
                 return "bg-gray-500 hover:bg-gray-600"
         }
     }
 
-    const getStatusIndicatorColor = (status: MeetingStatusEnum | null) => {
+    const getStatusIndicatorColor = (status: RaitingMeetingEnum | null) => {
         if (!status) return ""
 
         switch (status) {
-            case MeetingStatusEnum.MUITO_UTIL:
+            case RaitingMeetingEnum.MUITO_UTIL:
                 return "bg-green-500"
-            case MeetingStatusEnum.UTIL:
+            case RaitingMeetingEnum.UTIL:
                 return "bg-blue-500"
-            case MeetingStatusEnum.INUTIL:
+            case RaitingMeetingEnum.INUTIL:
                 return "bg-amber-500"
-            case MeetingStatusEnum.IMPRATICAVEL:
+            case RaitingMeetingEnum.IMPRATICAVEL:
                 return "bg-red-500"
             default:
                 return ""
@@ -125,7 +130,7 @@ export const useCalendarFunctions = () => {
     }
 
 
-    const getDayStatus = (date: Date): MeetingStatusEnum | null => {
+    const getDayStatus = (date: Date): RaitingMeetingEnum | null => {
         const dayMeetings = meetingData.filter(
             (meeting) =>
                 meeting.date.getDate() === date.getDate() &&
@@ -136,10 +141,10 @@ export const useCalendarFunctions = () => {
         if (dayMeetings.length === 0) return null
 
         // Prioridade: MUITO ÚTIL > ÚTIL > INÚTIL > IMPRATICÁVEL
-        if (dayMeetings.some((m) => m.status === MeetingStatusEnum.MUITO_UTIL)) return MeetingStatusEnum.MUITO_UTIL;
-        if (dayMeetings.some((m) => m.status === MeetingStatusEnum.UTIL)) return MeetingStatusEnum.UTIL;
-        if (dayMeetings.some((m) => m.status === MeetingStatusEnum.INUTIL)) return MeetingStatusEnum.INUTIL;
-        if (dayMeetings.some((m) => m.status === MeetingStatusEnum.IMPRATICAVEL)) return MeetingStatusEnum.IMPRATICAVEL;
+        if (dayMeetings.some((m) => m.rating === RaitingMeetingEnum.MUITO_UTIL)) return RaitingMeetingEnum.MUITO_UTIL;
+        if (dayMeetings.some((m) => m.rating === RaitingMeetingEnum.UTIL)) return RaitingMeetingEnum.UTIL;
+        if (dayMeetings.some((m) => m.rating === RaitingMeetingEnum.INUTIL)) return RaitingMeetingEnum.INUTIL;
+        if (dayMeetings.some((m) => m.rating === RaitingMeetingEnum.IMPRATICAVEL)) return RaitingMeetingEnum.IMPRATICAVEL;
 
         return null
     }
@@ -161,6 +166,7 @@ export const useCalendarFunctions = () => {
         selectedDate,
         weekDays,
         monthData,
+        filteredMeetings,
         prevMonth,
         nextMonth,
         getDayStatus,
@@ -169,7 +175,5 @@ export const useCalendarFunctions = () => {
         setSelectedDate,
         hasMeetings,
         formatDate,
-        formatMeeting,
-        filteredMeetings
     }
 }

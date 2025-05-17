@@ -1,12 +1,23 @@
-import type { FC } from "react";
+import type { FC, ReactNode } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCalendarFunctions } from "./CalendarFunctions";
 import { cn } from "@/lib/utils";
+import type { IMeeting } from "@/shared/interfaces/IMeeting";
 
-export const CalendarComponent: FC = () => {
+
+interface CalendarComponentProps {
+    meetingIndividualActions?: (meeting: IMeeting) => ReactNode
+}
+
+
+export const CalendarComponent: FC<CalendarComponentProps> = (
+    {
+        meetingIndividualActions
+    }
+) => {
     const {
         currentMonth,
         getStatusColor,
@@ -150,6 +161,7 @@ export const CalendarComponent: FC = () => {
                                                         <p className="text-sm text-muted-foreground">{meeting.time}</p>
                                                         <p className="text-sm">{meeting.description}</p>
                                                     </div>
+                                                    {meetingIndividualActions?.(meeting)}
                                                 </CardContent>
                                             </Card>
                                         ))}
