@@ -1,54 +1,58 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Desabafa.dev
 
-Currently, two official plugins are available:
+## O app que te ajuda a escapar de reuniões inúteis.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![Reunião Chata](https://s2.glbimg.com/8RTntxOK67YTI6vGnEYAKLkTwjs=/512x320/smart/e.glbimg.com/og/ed/f/original/2014/07/31/reuniao.jpg)
 
-## Expanding the ESLint configuration
+**Desafa.dev** é uma aplicação irreverente e divertida voltada para o ambiente corporativo. Seu objetivo principal é ajudar profissionais a lidarem com os desafios das reuniões e da convivência no trabalho de forma mais leve, oferecendo análises sinceras, momentos de desabafo e respostas espertas para situações do dia a dia.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Stack utilizada
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+**Front-end:** React, Vite, TailwindCSS, Shadcn.ui
+
+**Back-end:** Node, Java, Supabase
+
+
+## Funcionalidades
+
+### 🧠 Análise de Reuniões
+- Faça upload ou transcrição de uma reunião.
+- O sistema avalia o conteúdo e retorna uma análise indicando o **nível de inutilidade** da reunião, com base em critérios objetivos e sarcásticos.
+
+### 😤 Desabafador
+- Escreva seu desabafo sobre chefes, colegas ou clientes.
+- Receba uma **mensagem personalizada de conforto, empatia ou um puxão de orelha** — tudo com bom humor e sem julgamentos.
+
+### 💬 Sugestões de Respostas Corporativas
+- Selecione situações comuns do ambiente de trabalho (como "alguém marcou uma reunião às 18h").
+- Obtenha **respostas inteligentes, sutis ou passivo-agressivas** para lidar com a situação.
+
+
+
+## 🚀 Como Rodar Localmente
+
+Clone o projeto
+
+```bash
+  git clone https://github.com/CodeconWinners/front
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Entre no diretório do projeto
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+  cd front
 ```
+
+Instale as dependências
+
+```bash
+  npm install
+```
+
+Inicie o servidor
+
+```bash
+  npm run start
+```
+
