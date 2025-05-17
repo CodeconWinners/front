@@ -1,14 +1,13 @@
-import { Button } from "./components/ui/button"
+import Layout from "./Layout"
 
 
 function App() {
 
   return (
     <>
+    <Layout>
       <h1 className='text-xl font-bold underline'>Hello World</h1>
-      <div className="flex flex-col items-center justify-center min-h-svh">
-      <Button>Click me</Button>
-    </div>
+    </Layout>
     </>
   )
 }
