@@ -1,6 +1,14 @@
 import { RaitingMeetingEnum } from "@/shared/enums/RaitingMeetingEnum"
+import type { ITranscription } from "@/shared/interfaces/ITranscription"
+import { MeetingService } from "@/shared/services/MeetingService"
+import { CalendarClient } from "@/shared/utils/Axios"
+import { useState } from "react"
 
 export const useAnalyzePopupFunctions = () => {
+
+    const [transcription, setTranscription] = useState<string | null>(null)
+    const [analysis, setAnalysis] = useState<string | null>(null)
+    const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const getStatusColor = (status: RaitingMeetingEnum) => {
         switch (status) {
@@ -17,7 +25,20 @@ export const useAnalyzePopupFunctions = () => {
         }
     }
 
+    const getAnalysis = async (meetTranscription: string) => {
+        const transcriptionParsed = JSON.parse(meetTranscription) as ITranscription
+        setIsLoading(true)
+        const response = await MeetingService(CalendarClient).getAnalysis(transcriptionParsed)
+        setAnalysis(response.data.items.details.transcriptionMessage)
+        setIsLoading(false)
+    }
+
     return {
-        getStatusColor
+        getStatusColor,
+        getAnalysis,
+        transcription,
+        setTranscription,
+        analysis,
+        isLoading
     }
 }

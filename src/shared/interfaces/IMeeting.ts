@@ -5,8 +5,12 @@ export interface IMeeting {
     id: string
     title: string
     description: string
-    status: MeetingStatusEnum,
-    rating: RaitingMeetingEnum,
+    status: MeetingStatusEnum
+    rating: RaitingMeetingEnum
     date: Date
     time: string
+    predictionMessage?: string
+    transcriptionMessage?: string
+    predictionRating?: RaitingMeetingEnum
+    transcriptionRating?: RaitingMeetingEnum
 }

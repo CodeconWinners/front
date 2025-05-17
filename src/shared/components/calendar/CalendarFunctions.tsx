@@ -27,9 +27,9 @@ export const useCalendarFunctions = () => {
     const loadingMeetings = (date: string) => {
         getEvents(date)
         .then((response) => {
-            console.log('bbbbbbbb ::> ', response.data.items)
-            const teste = formatCalendar(response.data.items);
-            console.log('aaaaa ::> ', teste)
+            // console.log('bbbbbbbb ::> ', response.data.items)
+            // const teste = formatCalendar(response.data.items);
+            // console.log('aaaaa ::> ', teste)
             setMeetingData(formatCalendar(response.data.items))
         })
     }
@@ -43,7 +43,11 @@ export const useCalendarFunctions = () => {
                 status: value.details.status,
                 rating: value.details.transcriptionRating,
                 date: new Date(value.details.date),
-                time: value.details.time
+                time: value.details.time,
+                predictionMessage: value.details.predictionMessage || "",
+                transcriptionMessage: value.details.transcriptionMessage || "",
+                predictionRating: value.details.predictionRating || null,
+                transcriptionRating: value.details.transcriptionRating || null
             }
         })
     }

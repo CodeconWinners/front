@@ -12,6 +12,7 @@ import type { IMeeting } from "@/shared/interfaces/IMeeting";
 import { Badge } from "@/components/ui/badge";
 import { useAnalyzePopupFunctions } from "./AnalyzePopup.Functions";
 import { Textarea } from "@/components/ui/textarea"
+import { Loader2 } from "lucide-react";
 
 
 interface AnalyzePopupComponentProps {
@@ -19,7 +20,7 @@ interface AnalyzePopupComponentProps {
 }
 
 export const AnalyzePopupComponent: FC<AnalyzePopupComponentProps> = ({ meeting }) => {
-    const { getStatusColor } = useAnalyzePopupFunctions();
+    const { getStatusColor, getAnalysis, transcription, setTranscription, analysis, isLoading } = useAnalyzePopupFunctions();
     return (
         <DialogContent className="max-w-[90vw] max-h-[90vh] flex flex-col gap-4">
             <DialogHeader>
@@ -29,22 +30,26 @@ export const AnalyzePopupComponent: FC<AnalyzePopupComponentProps> = ({ meeting 
                     <p><strong>Status:</strong> <Badge className={getStatusColor(meeting.rating)}>{meeting.rating}</Badge></p>
                 </div>
                 <DialogDescription>
-                    <div>
-                        <h4 className="font-medium mb-2">Descrição</h4>
-                        <p>{meeting.description}</p>
-                    </div>
+                    <span className="font-medium mb-2">Descrição</span>
+                    <span>{meeting.description}</span>
                 </DialogDescription>
             </DialogHeader>
             <div className="mt-8">
-                <Textarea className="h-[150px] resize-none"  placeholder="Cole a Transcrição da Reunião Aqui..." />
+                <Textarea className="h-[150px] resize-none" value={transcription || ""} onChange={(e) => setTranscription(e.target.value)} placeholder="Cole a Transcrição da Reunião Aqui..." />
             </div>
             <div className="flex flex-col gap-4 mb-8">
-                <div className="h-[350px] rounded-md border border-gray-200 p-4">
-                    <h4 className="font-medium mb-2">Resultado da Análise</h4>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
-                </div>
-                
-                
+                <Button variant="default" onClick={() =>transcription && getAnalysis(transcription)}>Analizar Reunião</Button>
+                {isLoading && (
+                    <div className="flex justify-center items-center">
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                    </div>
+                )}
+                {analysis && (
+                <div className="h-[350px] rounded-md border border-gray-200 p-4">   
+                        <h4 className="font-medium mb-2">Resultado da Análise</h4>
+                        <p>{analysis}</p>
+                    </div>
+                )}
             </div>
             <DialogFooter>
                 <DialogClose asChild>
