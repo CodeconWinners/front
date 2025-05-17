@@ -1,17 +1,17 @@
-import Layout from "./Layout"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { PrivateRoutes } from "./shared/components/PrivateRoutes"
 import { TrainingModeComponent } from "./shared/components/trainingMode/TrainingModeComponent"
 import { AnalyzeMeetingComponent } from "./shared/components/analyzeMeeting/analyzeMeetingComponent"
 import { UnburdenComponent } from "./shared/components/unburden/UnburdenComponent"
 import { CalendarComponent } from "./shared/components/calendar/CalendarComponent"
+import { LoginComponent } from "./features/login/LoginComponent"
 function App() {
 
   return (
     <BrowserRouter>
-      <Layout>
+
         <Routes>
-          <Route path="/login" element={<input />} />
+          <Route path="/login" element={<LoginComponent />} />
           <Route
             path="/dashboard"
             element={
@@ -26,7 +26,6 @@ function App() {
             <Route path="/dashboard/perfil" element={<h1>Meu Perfil</h1>} />
           </Route>
         </Routes>
-      </Layout>
     </BrowserRouter>
   )
 }
