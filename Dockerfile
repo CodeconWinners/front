@@ -28,6 +28,7 @@ COPY --from=builder /app/dist ./dist
 # Instala o servidor HTTP para servir os arquivos (opcional: usar um servidor mais leve)
 RUN npm install -g serve
 
+
 # Define a porta que o container expõe
 EXPOSE 4173
 
