@@ -3,7 +3,7 @@ import type { EventsDto } from "@/shared/dtos/EventsDto"
 import { RaitingMeetingEnum } from "@/shared/enums/RaitingMeetingEnum"
 import type { IMeeting } from "@/shared/interfaces/IMeeting"
 import { CalendarService } from "@/shared/services/CalendarService"
-import Axios from "@/shared/utils/Axios"
+import {CalendarClient} from "@/shared/utils/Axios"
 // import { CalendarService } from "@/shared/services/CalendarService"
 import { format, getMonth, getYear } from 'date-fns'
 import { useEffect, useState } from "react"
@@ -18,7 +18,7 @@ export const useCalendarFunctions = () => {
         return format(date, 'yyyy-MM')
     }
 
-    const { getEvents } = CalendarService(Axios);
+    const { getEvents } = CalendarService(CalendarClient);
 
     useEffect(() => {
         loadingMeetings(actualDate())
@@ -27,10 +27,10 @@ export const useCalendarFunctions = () => {
     const loadingMeetings = (date: string) => {
         getEvents(date)
         .then((response) => {
-            console.log('bbbbbbbb ::> ', response.data.itens)
-            const teste = formatCalendar(response.data.itens);
+            console.log('bbbbbbbb ::> ', response.data.items)
+            const teste = formatCalendar(response.data.items);
             console.log('aaaaa ::> ', teste)
-            setMeetingData(formatCalendar(response.data.itens))
+            setMeetingData(formatCalendar(response.data.items))
         })
     }
 

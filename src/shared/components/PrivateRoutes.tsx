@@ -3,7 +3,7 @@ import { Outlet, Navigate, useLocation } from "react-router-dom"
 // import DefaultRenderBody from "../components/DefaultRenderBody"
 import { useEffect, useState } from "react";
 // import LoadingLottie from "@/assets/animations/Loading.json";
-import Axios from "../../shared/utils/Axios";
+import {Axios} from "../../shared/utils/Axios";
 import type { AxiosResponse } from "axios";
 // import { useGlobalAtributeStore } from "../../shared/stores/globalAttributeStore";
 // import Lottie from "lottie-react";

@@ -4,4 +4,8 @@ const Axios = axios.create({
     baseURL: "http://localhost:3000",
 });
 
-export default Axios;
+const CalendarClient = axios.create({
+    baseURL: "https://fa-google-integration.azurewebsites.net/api"
+})
+
+export {Axios, CalendarClient};
