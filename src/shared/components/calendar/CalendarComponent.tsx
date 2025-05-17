@@ -6,6 +6,9 @@ import { Button } from "@/components/ui/button";
 import { useCalendarFunctions } from "./CalendarFunctions";
 import { cn } from "@/lib/utils";
 import { OptionsMeetingComponent } from "@/features/calendarMeeting/optionsMeeting/OptionsMeetingComponent";
+import type { IMeeting } from "@/shared/interfaces/IMeeting";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { AnalyzePopupComponent } from "../analyzePopup/AnalyzePopupComponent";
 
 
 
@@ -147,23 +150,29 @@ export const CalendarComponent: FC = () => {
                                 {filteredMeetings.length > 0 ? (
                                     <div className="space-y-4 max-h-[500px] overflow-y-auto pr-2">
                                         {filteredMeetings.map((meeting) => (
-                                            <Card key={meeting.id} className="border shadow-sm">
-                                                <CardContent className="p-4">
-                                                    <div className="flex flex-col space-y-2">
-                                                        <div className="flex justify-between items-start">
-                                                            <h3 className="font-medium">{meeting.title}</h3>
-                                                            <Badge className={getStatusColor(meeting.rating)}>{meeting.rating}</Badge>
-                                                        </div>
-                                                        <p className="text-sm text-muted-foreground">{meeting.time}</p>
-                                                        <p className="text-sm">{meeting.description}</p>
-                                                    </div>
-                                                    {isMeetingActionsEnabled && (
+                                            <Dialog key={meeting.id}>
+                                                <DialogTrigger asChild>
+                                                    <Card className="border shadow-sm hover:bg-accent/50 cursor-pointer transition-colors">
+                                                        <CardContent className="p-4">
+                                                            <div className="flex flex-col space-y-2">
+                                                                <div className="flex justify-between items-start">
+                                                                    <h3 className="font-medium">{meeting.title}</h3>
+                                                                    <Badge className={getStatusColor(meeting.rating)}>{meeting.rating}</Badge>
+                                                                </div>
+                                                                <p className="text-sm text-muted-foreground">{meeting.time}</p>
+                                                                <p className="text-sm">{meeting.description}</p>
+                                                            </div>
+                                                       {isMeetingActionsEnabled && (
                                                         <OptionsMeetingComponent
                                                             meeting={meeting}
                                                         />
                                                     )}
-                                                </CardContent>
-                                            </Card>
+                                                        </CardContent>
+                                                    </Card>
+                                                </DialogTrigger>
+
+                                                <AnalyzePopupComponent meeting={meeting} />
+                                            </Dialog>
                                         ))}
                                     </div>
                                 ) : (
