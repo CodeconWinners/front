@@ -6,6 +6,6 @@ const Axios = axios.create({
 
 const CalendarClient = axios.create({
     baseURL: "https://fa-google-integration.azurewebsites.net/api"
-})
+});
 
 export {Axios, CalendarClient};

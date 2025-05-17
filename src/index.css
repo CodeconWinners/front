@@ -1,6 +1,7 @@
 @import url("https://pro.fontawesome.com/releases/v5.10.0/css/all.css");
 @import "tailwindcss";
 @import "tw-animate-css";
+@import 'react-toastify/dist/ReactToastify.css';
 
 @custom-variant dark (&:is(.dark *));
 
