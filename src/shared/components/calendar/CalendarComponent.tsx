@@ -156,7 +156,7 @@ export const CalendarComponent: FC<CalendarComponentProps> = (
                                                     <div className="flex flex-col space-y-2">
                                                         <div className="flex justify-between items-start">
                                                             <h3 className="font-medium">{meeting.title}</h3>
-                                                            <Badge className={getStatusColor(meeting.status)}>{meeting.status}</Badge>
+                                                            <Badge className={getStatusColor(meeting.rating)}>{meeting.rating}</Badge>
                                                         </div>
                                                         <p className="text-sm text-muted-foreground">{meeting.time}</p>
                                                         <p className="text-sm">{meeting.description}</p>
