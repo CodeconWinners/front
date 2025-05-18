@@ -6,7 +6,7 @@ import type { FC } from "react";
 
 export const LoginComponent: FC = () => {
 
-    const { scale } = useLoginComponentFunctions();
+    const { scale, user } = useLoginComponentFunctions();
 
     return (
         <>

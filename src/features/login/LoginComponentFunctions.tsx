@@ -23,7 +23,7 @@ export const useLoginComponentFunctions = () => {
     const googleCode = searchParams.get('code');
     const navigate = useNavigate();
 
-    const { getUserId, initializeAnalizeAll, saveUser } = LoginService(CalendarClient);
+    const { getUserId, initializeAnalizeAll } = LoginService(CalendarClient);
     const { set } = LocalStorageService();
 
     useEffect(() => {
