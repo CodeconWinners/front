@@ -13,6 +13,16 @@ export const ProfileService = (client: Axios) => {
         },
         saveProfile (user: UpdateUserProfile): AxiosPromise<void> {
             return client.put(`/api/profile`, user)
+        },
+        updateXP(userId: string){
+            return client.post(`/api/gaming/${userId}`, {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    xp: 100
+                })
+            })
         }
     }
 }
