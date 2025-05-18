@@ -3,12 +3,13 @@ import { Progress } from "@/components/ui/progress"
 import { Award, Star, Trophy } from "lucide-react"
 import type { FC } from "react"
 import { useProfileFunctions } from "./ProfileFunctions"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 
 
 
 export const ProfileComponent: FC = () => {
-    const { userProfile } = useProfileFunctions();
-
+    const { userProfile, changedValue, loading, save } = useProfileFunctions();
 
     return (
         <div className="container p-6 max-w-3xl mx-auto">
@@ -22,10 +23,47 @@ export const ProfileComponent: FC = () => {
                     <div className="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center">
                         <span className="text-3xl">👩‍💼</span>
                     </div>
-                    <h2 className="text-xl font-bold">{userProfile.name}</h2>
-                    <div className="flex items-center gap-1 text-amber-500">
-                        <Trophy className="h-5 w-5" />
-                        <span className="font-medium">Nível {userProfile.level}</span>
+                        <div className="flex items-center gap-1 text-amber-500">
+                            <Trophy className="h-5 w-5" />
+                            <span className="font-medium">Nível {userProfile.level}</span>
+                        </div>
+                    <div className="grid grid-cols-2 lg:grid-cols-12 md:grid-cols-12 gap-2 w-full">
+                        <fieldset className="w-full text-start col-span-6">
+                            <label>Nome</label>
+                            <Input
+                                value={userProfile.name}
+                                onChange={(event) => changedValue("name", event.target.value)}
+                            />
+                        </fieldset>
+                        <fieldset className="w-full text-start col-span-6">
+                            <label>Sobrenome</label>
+                            <Input
+                                value={userProfile.lastName}
+                                onChange={(event) => changedValue("name", event.target.value)}
+                            />
+                        </fieldset>
+                        <fieldset className="w-full text-start col-span-6">
+                            <label>email</label>
+                            <Input
+                                value={userProfile.email}
+                                onChange={(event) => changedValue("name", event.target.value)}
+                            />
+                        </fieldset>
+                        <fieldset className="w-full text-start col-span-6">
+                            <label>Cargo</label>
+                            <Input
+                                value={userProfile.jobTitle}
+                                onChange={(event) => changedValue("name", event.target.value)}
+                            />
+                        </fieldset>
+                        <fieldset className="w-full text-start col-span-6">
+                            <label>Descrição</label>
+                            <Input
+                                value={userProfile.jobDescription}
+                                onChange={(event) => changedValue("name", event.target.value)}
+                            />
+                        </fieldset>
+
                     </div>
                 </div>
 
@@ -34,40 +72,13 @@ export const ProfileComponent: FC = () => {
                         <div className="flex justify-between">
                             <h3 className="font-medium">XP acumulado</h3>
                             <span>
-                                {userProfile.xp} / {userProfile.nextLevelXp}
+                                {userProfile.totalXp} / {userProfile.nextLevelXp}
                             </span>
                         </div>
-                        <Progress value={(userProfile.xp / userProfile.nextLevelXp) * 100} className="h-2" />
-                        <p className="text-xs text-muted-foreground text-center">
-                            Faltam {userProfile.nextLevelXp - userProfile.xp} XP para o próximo nível
-                        </p>
+                        <Progress value={(userProfile.totalXp / 5000) * 100} className="h-2" />
                     </CardContent>
                 </Card>
 
-                <div className="space-y-3">
-                    <h3 className="font-medium flex items-center gap-2">
-                        <Award className="h-5 w-5 text-primary" />
-                        Badges conquistadas
-                    </h3>
-
-                    <div className="grid grid-cols-1 gap-3">
-                        {userProfile.badges && (
-                            <>
-                                {userProfile.badges.map((badge, index) => (
-                                    <Card key={index}>
-                                        <CardContent className="p-4 flex items-center gap-3">
-                                            <div className="bg-primary/10 p-2 rounded-full">{badge.icon}</div>
-                                            <div>
-                                                <h4 className="font-medium">{badge.name}</h4>
-                                                <p className="text-xs text-muted-foreground">{badge.description}</p>
-                                            </div>
-                                        </CardContent>
-                                    </Card>
-                                ))}
-                            </>
-                        )}
-                    </div>
-                </div>
 
                 <Card>
                     <CardContent className="p-4 flex justify-between items-center">
@@ -78,6 +89,19 @@ export const ProfileComponent: FC = () => {
                         <span className="text-xl font-bold">#{userProfile.ranking}</span>
                     </CardContent>
                 </Card>
+            </div>
+            <div className="mt-6">
+                <Button variant={"default"} onClick={save} disabled={loading ? true : false}>
+                    {loading ? (
+                        <>
+                            salvando
+                        </>
+                    ) : (
+                        <>
+                            Salvar
+                        </>
+                    )}
+                </Button>
             </div>
         </div>
     )

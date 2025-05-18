@@ -33,7 +33,7 @@ export const useLoginComponentFunctions = () => {
                         initializeAnalizeAll(response.data.userId)
                             .finally(() => {
                                 setLoading(false)
-                                navigate('/dashboard/calendario')
+                                navigate('/dashboard/perfil')
                             })
                     } else {
                         toast.error("Ops acho que tivemos um terremoto aqui, não deu pra achar sua conta!😲")
