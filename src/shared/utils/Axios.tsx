@@ -8,4 +8,8 @@ const CalendarClient = axios.create({
     baseURL: "https://fa-google-integration.azurewebsites.net/api"
 });
 
-export {Axios, CalendarClient};
+const userClient = axios.create({
+    baseURL: "http://desabafa-dev-2.us-east-1.elasticbeanstalk.com"
+})
+
+export { Axios, CalendarClient, userClient };

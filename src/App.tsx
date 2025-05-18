@@ -5,6 +5,7 @@ import { AnalyzeMeetingComponent } from "./shared/components/analyzeMeeting/anal
 import { UnburdenComponent } from "./shared/components/unburden/UnburdenComponent"
 import { CalendarComponent } from "./shared/components/calendar/CalendarComponent"
 import { LoginComponent } from "./features/login/LoginComponent"
+import { ProfileComponent } from "./features/profile/ProfileComponent"
 function App() {
 
   return (
@@ -23,7 +24,7 @@ function App() {
             <Route path="/dashboard/analisar-reuniao" element={<AnalyzeMeetingComponent />} />
             <Route path="/dashboard/modo-treino" element={<TrainingModeComponent />} />
             <Route path="/dashboard/calendario" element={<CalendarComponent/>} />
-            <Route path="/dashboard/perfil" element={<h1>Meu Perfil</h1>} />
+            <Route path="/dashboard/perfil" element={<ProfileComponent/>} />
           </Route>
         </Routes>
     </BrowserRouter>
