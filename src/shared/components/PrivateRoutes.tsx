@@ -1,10 +1,11 @@
 
-import { Outlet, Navigate, useLocation } from "react-router-dom"
+import { Outlet, Navigate } from "react-router-dom"
 // import DefaultRenderBody from "../components/DefaultRenderBody"
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 // import LoadingLottie from "@/assets/animations/Loading.json";
-import {Axios} from "../../shared/utils/Axios";
-import type { AxiosResponse } from "axios";
+// import {Axios} from "../../shared/utils/Axios";
+// import type { AxiosResponse } from "axios";
+import Layout from "@/Layout";
 // import { useGlobalAtributeStore } from "../../shared/stores/globalAttributeStore";
 // import Lottie from "lottie-react";
 interface PrivateRoutesProps {
@@ -15,9 +16,9 @@ export const PrivateRoutes = ({
     redirectTo,
 }: PrivateRoutesProps) => {
 
-    const [valid, setValid] = useState(true);
-    const [isLoading, setIsLoading] = useState(false);
-    const route = useLocation();
+    const [valid, _setValid] = useState(true);
+    const [isLoading, _setIsLoading] = useState(false);
+    // const route = useLocation();
 
     // useEffect(() => {
     //     if (localStorage.getItem('token')) {
@@ -62,8 +63,10 @@ export const PrivateRoutes = ({
                         <>
 
                             <>
-
+                            <Layout>
                                 <Outlet />
+                            </Layout>
+
                             </>
 
                         </>

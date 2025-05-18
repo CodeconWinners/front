@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { useCalendarFunctions } from "./CalendarFunctions";
 import { cn } from "@/lib/utils";
 import { OptionsMeetingComponent } from "@/features/calendarMeeting/optionsMeeting/OptionsMeetingComponent";
-import type { IMeeting } from "@/shared/interfaces/IMeeting";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { AnalyzePopupComponent } from "../analyzePopup/AnalyzePopupComponent";
 

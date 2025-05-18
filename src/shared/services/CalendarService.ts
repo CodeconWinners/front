@@ -5,7 +5,7 @@ import type { EventsDto } from "../dtos/EventsDto"
 export const CalendarService = (fetch: Axios) => {
 
     return {
-        getEvents(date: string): AxiosPromise<{items: EventsDto[]}> {
+        getEvents(_date: string): AxiosPromise<{items: EventsDto[]}> {
             return fetch.get('/calendar/read-events', {
                 params: {
                     // date: date,
