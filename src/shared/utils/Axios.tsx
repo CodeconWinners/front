@@ -9,7 +9,7 @@ const CalendarClient = axios.create({
 });
 
 const userClient = axios.create({
-    baseURL: "http://desabafa-dev-2.us-east-1.elasticbeanstalk.com"
+    baseURL: "https://applications-api-gateway.sgzlyn.easypanel.host/desabafa-dev"
 })
 
 export { Axios, CalendarClient, userClient };

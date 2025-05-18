@@ -8,9 +8,7 @@ export const ProfileService = (client: Axios) => {
 
     return {
         getProfile (userId: string): AxiosPromise<UserProfileDto> {
-            return client.get(``, {
-                params: userId
-            })
+            return client.get(`/api/profile/${userId}`)
         }
     }
 }
