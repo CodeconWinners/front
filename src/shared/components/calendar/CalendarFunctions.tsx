@@ -29,12 +29,12 @@ export const useCalendarFunctions = () => {
 
     const loadingMeetings = (date: string) => {
         const userId = get("userId");
-        // if(userId) {
+        if(userId) {
             getEvents(date, "c4b22529-81bf-473b-8336-bac6151c9df7")
             .then((response) => {
                 setMeetingData(formatCalendar(response.data.items))
             })
-        // }
+        }
     }
 
     const formatCalendar = (data: EventsDto[]): IMeeting[] => {

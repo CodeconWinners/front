@@ -17,7 +17,6 @@ export const CalendarComponent: FC = () => {
         currentMonth,
         getStatusColor,
         selectedDate,
-        getDayStatus,
         getDayPredictionRating,
         getRatingColor,
         prevMonth,

@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { Award, Star, Trophy } from "lucide-react"
+import { Star, Trophy } from "lucide-react"
 import type { FC } from "react"
 import { useProfileFunctions } from "./ProfileFunctions"
 import { Button } from "@/components/ui/button"
