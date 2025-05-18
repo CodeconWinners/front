@@ -2,6 +2,7 @@ import type { EventsDto } from "@/shared/dtos/EventsDto"
 import { RaitingMeetingEnum } from "@/shared/enums/RaitingMeetingEnum"
 import type { IMeeting } from "@/shared/interfaces/IMeeting"
 import { CalendarService } from "@/shared/services/CalendarService"
+import { LocalStorageService } from "@/shared/services/LocalStorageService"
 import {CalendarClient} from "@/shared/utils/Axios"
 // import { CalendarService } from "@/shared/services/CalendarService"
 import { format } from 'date-fns'
@@ -18,19 +19,23 @@ export const useCalendarFunctions = () => {
     }
 
     const { getEvents } = CalendarService(CalendarClient);
+    const { get } = LocalStorageService();
 
     useEffect(() => {
         loadingMeetings(actualDate())
     }, [])
 
     const loadingMeetings = (date: string) => {
-        getEvents(date)
-        .then((response) => {
-            // console.log('bbbbbbbb ::> ', response.data.items)
-            // const teste = formatCalendar(response.data.items);
-            // console.log('aaaaa ::> ', teste)
-            setMeetingData(formatCalendar(response.data.items))
-        })
+        const userId = get("userId");
+        if(userId) {
+            getEvents(date, userId)
+            .then((response) => {
+                // console.log('bbbbbbbb ::> ', response.data.items)
+                // const teste = formatCalendar(response.data.items);
+                // console.log('aaaaa ::> ', teste)
+                setMeetingData(formatCalendar(response.data.items))
+            })
+        }
     }
 
     const formatCalendar = (data: EventsDto[]): IMeeting[] => {
