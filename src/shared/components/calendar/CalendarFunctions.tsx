@@ -1,11 +1,10 @@
-import { MeetingsMock } from "@/mocks/MeetingMock"
 import type { EventsDto } from "@/shared/dtos/EventsDto"
 import { RaitingMeetingEnum } from "@/shared/enums/RaitingMeetingEnum"
 import type { IMeeting } from "@/shared/interfaces/IMeeting"
 import { CalendarService } from "@/shared/services/CalendarService"
 import {CalendarClient} from "@/shared/utils/Axios"
 // import { CalendarService } from "@/shared/services/CalendarService"
-import { format, getMonth, getYear } from 'date-fns'
+import { format } from 'date-fns'
 import { useEffect, useState } from "react"
 
 export const useCalendarFunctions = () => {
