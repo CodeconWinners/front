@@ -20,14 +20,15 @@ interface AnalyzePopupComponentProps {
 }
 
 export const AnalyzePopupComponent: FC<AnalyzePopupComponentProps> = ({ meeting }) => {
-    const { getStatusColor, getAnalysis, transcription, setTranscription, analysis, isLoading } = useAnalyzePopupFunctions();
+    const { getStatusColor, getAnalysis, transcription, setTranscription, analysis, isLoading, getRaitingName } = useAnalyzePopupFunctions();
+
     return (
         <DialogContent className="max-w-[90vw] max-h-[90vh] flex flex-col gap-4">
             <DialogHeader>
                 <DialogTitle>{meeting.title}</DialogTitle>
                 <div className="flex justify-between">
                     <p><strong>Horário:</strong> {meeting.time}</p>
-                    <p><strong>Status:</strong> <Badge className={getStatusColor(meeting.rating)}>{meeting.rating}</Badge></p>
+                    <p><strong>Avaliação IA:</strong> <Badge className={getStatusColor(meeting.rating)}>{getRaitingName(meeting.rating)}</Badge></p>
                 </div>
                 <DialogDescription>
                     <span className="font-medium mb-2">Descrição</span>

@@ -4,7 +4,7 @@ import { RaitingMeetingEnum } from "@/shared/enums/RaitingMeetingEnum"
 import type { IMeeting } from "@/shared/interfaces/IMeeting"
 import { CalendarService } from "@/shared/services/CalendarService"
 import { LocalStorageService } from "@/shared/services/LocalStorageService"
-import {CalendarClient} from "@/shared/utils/Axios"
+import { CalendarClient } from "@/shared/utils/Axios"
 import { sanetizeText } from "@/shared/utils/sanetizeText"
 // import { CalendarService } from "@/shared/services/CalendarService"
 import { format } from 'date-fns'
@@ -29,11 +29,11 @@ export const useCalendarFunctions = () => {
 
     const loadingMeetings = (date: string) => {
         const userId = get("userId");
-        if(userId) {
+        if (userId) {
             getEvents(date, "c4b22529-81bf-473b-8336-bac6151c9df7")
-            .then((response) => {
-                setMeetingData(formatCalendar(response.data.items))
-            })
+                .then((response) => {
+                    setMeetingData(formatCalendar(response.data.items))
+                })
         }
     }
 
@@ -67,6 +67,19 @@ export const useCalendarFunctions = () => {
                 return "bg-red-500"
             default:
                 return "bg-gray-500"
+        }
+    }
+
+    const getStatusName = (status: MeetingStatusEnum): string => {
+        if (!status) return "";
+
+        switch (status) {
+            case MeetingStatusEnum.CONFIRMED:
+                return "Confirmado"
+            case MeetingStatusEnum.TENTATIVE:
+                return "Talvez"
+            case MeetingStatusEnum.DECLINED:
+                return "Cancelado"
         }
     }
 
@@ -235,6 +248,7 @@ export const useCalendarFunctions = () => {
         setSelectedDate,
         hasMeetings,
         formatDate,
-        sanitize
+        sanitize,
+        getStatusName
     }
 }

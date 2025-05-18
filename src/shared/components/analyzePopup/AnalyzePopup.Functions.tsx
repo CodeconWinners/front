@@ -12,7 +12,25 @@ export const useAnalyzePopupFunctions = () => {
     const [analysis, setAnalysis] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const {get} = LocalStorageService();
+    const { get } = LocalStorageService();
+
+    const getRaitingName = (raiting: RaitingMeetingEnum): string => {
+        if (!raiting) return "";
+
+        switch (raiting) {
+            case RaitingMeetingEnum.MUITO_UTIL:
+                return "Muito util"
+            case RaitingMeetingEnum.UTIL:
+                return "Utíl"
+            case RaitingMeetingEnum.INUTIL:
+                return "Inutíl"
+            case RaitingMeetingEnum.IMPRATICAVEL:
+                return "Impraticavel"
+
+        }
+        return ""
+
+    }
 
     const getStatusColor = (status: RaitingMeetingEnum) => {
         switch (status) {
@@ -29,25 +47,28 @@ export const useAnalyzePopupFunctions = () => {
         }
     }
 
+
+
     const getAnalysis = async (meetTranscription: string) => {
         const transcriptionParsed = JSON.parse(meetTranscription) as ITranscription
         setIsLoading(true)
         const userId = get("userId");
-        if(userId) {
-            const response = await MeetingService(CalendarClient).getAnalysis(transcriptionParsed,userId);
+        if (userId) {
+            const response = await MeetingService(CalendarClient).getAnalysis(transcriptionParsed, userId);
             setAnalysis(response.data.items.details.transcriptionMessage)
-        }else {
+        } else {
             toast.error("Ops, acho que não conseguimos fazer a transcrição no momento!!!!")
         }
         setIsLoading(false)
     }
 
     return {
+        transcription,
+        analysis,
+        isLoading,
         getStatusColor,
         getAnalysis,
-        transcription,
         setTranscription,
-        analysis,
-        isLoading
+        getRaitingName,
     }
 }

@@ -23,6 +23,7 @@ export const CalendarComponent: FC = () => {
         setSelectedDate,
         monthData,
         nextMonth,
+        getStatusName,
         weekDays,
         filteredMeetings,
         formatDate,
@@ -34,7 +35,7 @@ export const CalendarComponent: FC = () => {
 
 
     return (
-        <div className="container p-6 max-w-6xl mx-auto">
+        <div className="container p-6 max-w-8xl mx-auto">
             <div className="space-y-6">
                 <div className="space-y-2">
                     <h1 className="text-3xl font-bold">Calendário de Reuniões</h1>
@@ -158,7 +159,12 @@ export const CalendarComponent: FC = () => {
                                                             <div className="flex flex-col space-y-2">
                                                                 <div className="flex justify-between items-start">
                                                                     <h3 className="font-medium">{meeting.title}</h3>
-                                                                    <Badge className={getStatusColor(meeting.status)}>{meeting.status}</Badge>
+                                                                    <Badge className={`${getStatusColor(meeting.status)} text-sm`}>
+                                                                        <div>
+                                                                            <p className="text-xs">Convite</p>
+                                                                            <p>{getStatusName(meeting.status)}</p>
+                                                                        </div>
+                                                                    </Badge>
                                                                 </div>
                                                                 <p className="text-sm text-muted-foreground">{meeting.time}</p>
                                                                 <p className="text-sm">{sanitize(meeting.description)}</p>
@@ -177,13 +183,15 @@ export const CalendarComponent: FC = () => {
                                         ))}
                                     </div>
                                 ) : (
-                                    <div className="flex flex-col items-center justify-center h-[300px] text-center">
-                                        <p className="text-muted-foreground mb-4">Nenhuma reunião agendada para esta data.</p>
-                                        <Button variant="outline">
-                                            <Plus className="h-4 w-4 mr-2" />
-                                            Adicionar reunião
-                                        </Button>
-                                    </div>
+                                    // <div className="flex flex-col items-center justify-center h-[300px] text-center">
+                                    //     <p className="text-muted-foreground mb-4">Nenhuma reunião agendada para esta data.</p>
+                                    //     <Button variant="outline">
+                                    //         <Plus className="h-4 w-4 mr-2" />
+                                    //         Adicionar reunião
+                                    //     </Button>
+                                    // </div>
+                                    <>
+                                    </>
                                 )}
                             </CardContent>
                         </Card>
