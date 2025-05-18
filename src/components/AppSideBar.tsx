@@ -1,4 +1,4 @@
-import { Calendar, MessageSquareMore, Users, Dumbbell, User } from "lucide-react"
+import { Calendar, MessageSquareMore, Dumbbell, User } from "lucide-react"
 
 import {
   Sidebar,
@@ -17,11 +17,6 @@ const items = [
     title: "Desabafar",
     url: "/dashboard/desabafar",
     icon: MessageSquareMore,
-  },
-  {
-    title: "Analisar Reunião",
-    url: "/dashboard/analisar-reuniao",
-    icon: Users,
   },
   {
       title: "Modo Treino",
