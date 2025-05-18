@@ -1,3 +1,5 @@
+
+import type { SaveUserDto } from "@/shared/dtos/SaveUserDto";
 import { LocalStorageService } from "@/shared/services/LocalStorageService";
 import { LoginService } from "@/shared/services/LoginService";
 import { CalendarClient } from "@/shared/utils/Axios";
@@ -10,10 +12,18 @@ export const useLoginComponentFunctions = () => {
     const [searchParams] = useSearchParams();
     const [loading, setLoading] = useState(false);
     const [scale, setScale] = useState('full');
+    const [user, setUser] = useState<SaveUserDto>({
+        email: "",
+        jobTitle: "",
+        lastName: "",
+        name: "",
+        userId: "",
+        jobDescription: ""
+    })
     const googleCode = searchParams.get('code');
     const navigate = useNavigate();
 
-    const { getUserId, initializeAnalizeAll } = LoginService(CalendarClient);
+    const { getUserId, initializeAnalizeAll, saveUser } = LoginService(CalendarClient);
     const { set } = LocalStorageService();
 
     useEffect(() => {
@@ -21,6 +31,8 @@ export const useLoginComponentFunctions = () => {
             setScale('0')
         }, 520)
     }, [])
+
+
 
     useEffect(() => {
         if (googleCode) {
@@ -31,6 +43,10 @@ export const useLoginComponentFunctions = () => {
                         toast.info("Estamos preparando tudo para você dar a descupa pro seu chefe! 😉")
                         set("userId", response.data.userId);
                         initializeAnalizeAll(response.data.userId)
+                            .then(() => {
+                                const userObjct = {...user};
+                                saveUserDb({...userObjct, userId: response.data.userId})
+                            })
                             .finally(() => {
                                 setLoading(false)
                                 navigate('/dashboard/perfil')
@@ -42,8 +58,21 @@ export const useLoginComponentFunctions = () => {
         }
     }, [googleCode]);
 
+
+    const changedValue = (field: keyof SaveUserDto, value: any) => {
+        if (user && user[field] !== value) {
+            setUser(prevValues => ({ ...prevValues, [field]: value }));
+        }
+    }
+
+    const saveUserDb = (object: SaveUserDto) => {
+        saveUser(object)
+    }
+
     return {
         scale,
-        loading
+        loading,
+        user,
+        changedValue
     }
 }
