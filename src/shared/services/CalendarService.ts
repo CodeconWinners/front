@@ -8,7 +8,6 @@ export const CalendarService = (fetch: Axios) => {
         getEvents(_date: string, userId: string): AxiosPromise<{items: EventsDto[]}> {
             return fetch.get('/calendar/read-events', {
                 params: {
-                    // date: date,
                     userId: userId
                 }
             })
