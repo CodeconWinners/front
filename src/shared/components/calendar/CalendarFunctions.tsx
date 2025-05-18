@@ -1,4 +1,5 @@
 import type { EventsDto } from "@/shared/dtos/EventsDto"
+import { MeetingStatusEnum } from "@/shared/enums/MeetingStatusEnum"
 import { RaitingMeetingEnum } from "@/shared/enums/RaitingMeetingEnum"
 import type { IMeeting } from "@/shared/interfaces/IMeeting"
 import { CalendarService } from "@/shared/services/CalendarService"
@@ -56,24 +57,7 @@ export const useCalendarFunctions = () => {
         })
     }
 
-    const getStatusColor = (status: RaitingMeetingEnum) => {
-        switch (status) {
-            case RaitingMeetingEnum.MUITO_UTIL:
-                return "bg-green-500 hover:bg-green-600"
-            case RaitingMeetingEnum.UTIL:
-                return "bg-blue-500 hover:bg-blue-600"
-            case RaitingMeetingEnum.INUTIL:
-                return "bg-amber-500 hover:bg-amber-600"
-            case RaitingMeetingEnum.IMPRATICAVEL:
-                return "bg-red-500 hover:bg-red-600"
-            default:
-                return "bg-gray-500 hover:bg-gray-600"
-        }
-    }
-
-    const getStatusIndicatorColor = (status: RaitingMeetingEnum | null) => {
-        if (!status) return ""
-
+    const getRatingColor = (status: RaitingMeetingEnum) => {
         switch (status) {
             case RaitingMeetingEnum.MUITO_UTIL:
                 return "bg-green-500"
@@ -82,6 +66,21 @@ export const useCalendarFunctions = () => {
             case RaitingMeetingEnum.INUTIL:
                 return "bg-amber-500"
             case RaitingMeetingEnum.IMPRATICAVEL:
+                return "bg-red-500"
+            default:
+                return "bg-gray-500"
+        }
+    }
+
+    const getStatusColor = (status: MeetingStatusEnum | null) => {
+        if (!status) return ""
+
+        switch (status) {
+            case MeetingStatusEnum.CONFIRMED:
+                return "bg-green-500"
+            case MeetingStatusEnum.TENTATIVE:
+                return "bg-amber-500"
+            case MeetingStatusEnum.DECLINED:
                 return "bg-red-500"
             default:
                 return ""
@@ -169,7 +168,7 @@ export const useCalendarFunctions = () => {
     }
 
 
-    const getDayStatus = (date: Date): RaitingMeetingEnum | null => {
+    const getDayStatus = (date: Date): MeetingStatusEnum | null => {
         const dayMeetings = meetingData.filter(
             (meeting) =>
                 meeting.date.getDate() === date.getDate() &&
@@ -180,10 +179,28 @@ export const useCalendarFunctions = () => {
         if (dayMeetings.length === 0) return null
 
         // Prioridade: MUITO ÚTIL > ÚTIL > INÚTIL > IMPRATICÁVEL
-        if (dayMeetings.some((m) => m.rating === RaitingMeetingEnum.MUITO_UTIL)) return RaitingMeetingEnum.MUITO_UTIL;
-        if (dayMeetings.some((m) => m.rating === RaitingMeetingEnum.UTIL)) return RaitingMeetingEnum.UTIL;
-        if (dayMeetings.some((m) => m.rating === RaitingMeetingEnum.INUTIL)) return RaitingMeetingEnum.INUTIL;
-        if (dayMeetings.some((m) => m.rating === RaitingMeetingEnum.IMPRATICAVEL)) return RaitingMeetingEnum.IMPRATICAVEL;
+        if (dayMeetings.some((m) => m.status === MeetingStatusEnum.CONFIRMED)) return MeetingStatusEnum.CONFIRMED;
+        if (dayMeetings.some((m) => m.status === MeetingStatusEnum.DECLINED)) return MeetingStatusEnum.DECLINED;
+        if (dayMeetings.some((m) => m.status === MeetingStatusEnum.TENTATIVE)) return MeetingStatusEnum.TENTATIVE;
+
+        return null
+    }
+
+    const getDayPredictionRating = (date: Date): RaitingMeetingEnum | null => {
+        const dayMeetings = meetingData.filter(
+            (meeting) =>
+                meeting.date.getDate() === date.getDate() &&
+                meeting.date.getMonth() === date.getMonth() &&
+                meeting.date.getFullYear() === date.getFullYear(),
+        )
+
+        if (dayMeetings.length === 0) return null
+
+        // Prioridade: MUITO ÚTIL > ÚTIL > INÚTIL > IMPRATICÁVEL
+        if (dayMeetings.some((m) => m.predictionRating === RaitingMeetingEnum.MUITO_UTIL)) return RaitingMeetingEnum.MUITO_UTIL;
+        if (dayMeetings.some((m) => m.predictionRating === RaitingMeetingEnum.UTIL)) return RaitingMeetingEnum.UTIL;
+        if (dayMeetings.some((m) => m.predictionRating === RaitingMeetingEnum.INUTIL)) return RaitingMeetingEnum.INUTIL;
+        if (dayMeetings.some((m) => m.predictionRating === RaitingMeetingEnum.IMPRATICAVEL)) return RaitingMeetingEnum.IMPRATICAVEL;
 
         return null
     }
@@ -209,7 +226,8 @@ export const useCalendarFunctions = () => {
         prevMonth,
         nextMonth,
         getDayStatus,
-        getStatusIndicatorColor,
+        getDayPredictionRating,
+        getRatingColor,
         getStatusColor,
         setSelectedDate,
         hasMeetings,
