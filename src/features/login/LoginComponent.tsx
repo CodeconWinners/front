@@ -70,28 +70,28 @@ export const LoginComponent: FC = () => {
                             <label>Sobrenome</label>
                             <Input
                                 value={user.lastName}
-                                onChange={(event) => changedValue("name", event.target.value)}
+                                onChange={(event) => changedValue("lastName", event.target.value)}
                             />
                         </fieldset>
                         <fieldset className="w-full text-start col-span-6">
                             <label>email</label>
                             <Input
                                 value={user.email}
-                                onChange={(event) => changedValue("name", event.target.value)}
+                                onChange={(event) => changedValue("email", event.target.value)}
                             />
                         </fieldset>
                         <fieldset className="w-full text-start col-span-6">
                             <label>Cargo</label>
                             <Input
                                 value={user.jobTitle}
-                                onChange={(event) => changedValue("name", event.target.value)}
+                                onChange={(event) => changedValue("jobTitle", event.target.value)}
                             />
                         </fieldset>
                         <fieldset className="w-full text-start col-span-6">
                             <label>Descrição</label>
                             <Input
                                 value={user.jobDescription}
-                                onChange={(event) => changedValue("name", event.target.value)}
+                                onChange={(event) => changedValue("jobDescription", event.target.value)}
                             />
                         </fieldset>
 
