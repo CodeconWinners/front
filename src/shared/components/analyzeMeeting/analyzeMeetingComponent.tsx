@@ -1,21 +1,13 @@
 import type { FC } from "react";
-import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent } from "@/components/ui/card"
 import { Send, Clock, ThumbsDown } from "lucide-react"
-
+import { useAnalyzeMeetingFunctions } from "./analyzeMeetingFunctions"
 
 export const AnalyzeMeetingComponent: FC = () => {
 
-    const [transcript, setTranscript] = useState("")
-    const [showAnalysis, setShowAnalysis] = useState(false)
-
-    const handleSubmit = () => {
-        if (transcript) {
-            setShowAnalysis(true)
-        }
-    }
+    const { transcript, showAnalysis, handleSubmit, setTranscript, setShowAnalysis } = useAnalyzeMeetingFunctions()
 
     return (
         <div className="container p-6 max-w-3xl mx-auto">

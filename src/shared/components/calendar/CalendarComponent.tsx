@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { OptionsMeetingComponent } from "@/features/calendarMeeting/optionsMeeting/OptionsMeetingComponent";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { AnalyzePopupComponent } from "../analyzePopup/AnalyzePopupComponent";
+import { ExcuseGeneratorComponent } from "@/features/excuseGenerator/ExcuseGeneratorComponent";
 
 
 
@@ -31,7 +32,7 @@ export const CalendarComponent: FC = () => {
         hasMeetings
     } = useCalendarFunctions();
 
-        const isMeetingActionsEnabled = true;
+    const isMeetingActionsEnabled = true;
 
 
     return (
@@ -79,7 +80,7 @@ export const CalendarComponent: FC = () => {
                                             day.date.getMonth() === selectedDate.getMonth() &&
                                             day.date.getFullYear() === selectedDate.getFullYear()
 
-                                        
+
                                         const dayPredictionRating = getDayPredictionRating(day.date)
                                         const statusColor = getRatingColor(dayPredictionRating!)
                                         const hasIndicator = hasMeetings(day.date)
@@ -153,6 +154,7 @@ export const CalendarComponent: FC = () => {
                                     <div className="space-y-4 max-h-[500px] overflow-y-auto pr-2">
                                         {filteredMeetings.map((meeting) => (
                                             <Dialog key={meeting.id}>
+                                                <ExcuseGeneratorComponent meeting={meeting} />
                                                 <DialogTrigger asChild>
                                                     <Card className="border shadow-sm hover:bg-accent/50 cursor-pointer transition-colors">
                                                         <CardContent className="p-4">
@@ -169,17 +171,18 @@ export const CalendarComponent: FC = () => {
                                                                 <p className="text-sm text-muted-foreground">{meeting.time}</p>
                                                                 <p className="text-sm">{sanitize(meeting.description)}</p>
                                                             </div>
-                                                       {isMeetingActionsEnabled && (
-                                                        <OptionsMeetingComponent
-                                                            meeting={meeting}
-                                                        />
-                                                    )}
+                                                            {isMeetingActionsEnabled && (
+                                                                <OptionsMeetingComponent
+                                                                    meeting={meeting}
+                                                                />
+                                                            )}
                                                         </CardContent>
                                                     </Card>
                                                 </DialogTrigger>
 
                                                 <AnalyzePopupComponent meeting={meeting} />
                                             </Dialog>
+
                                         ))}
                                     </div>
                                 ) : (
