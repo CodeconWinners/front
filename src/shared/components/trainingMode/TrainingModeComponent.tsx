@@ -7,7 +7,7 @@ import { useTrainingModeFunctions } from "./TrainingModeFunctions"
 
 export const TrainingModeComponent: FC = () => {
 
-  const { scenario, feedback, step, selectedOption, handleSelectOption, setStep, setSelectedOption } = useTrainingModeFunctions()
+  const { scenario, feedback, step, selectedOption, handleSelectOption, setStep, setSelectedOption, translateResults } = useTrainingModeFunctions()
 
   
     return (
@@ -50,12 +50,12 @@ export const TrainingModeComponent: FC = () => {
               </CardContent>
             </Card>
 
-            <Card>
+            {/* <Card>
               <CardContent className="p-4">
                 <h2 className="font-medium mb-2">Reação da IA:</h2>
                 <p>{selectedOption !== null && feedback[(selectedOption + 1) as keyof typeof feedback].reaction}</p>
               </CardContent>
-            </Card>
+            </Card> */}
 
             <div className="space-y-4">
               <h3 className="font-medium flex items-center gap-2">
@@ -64,11 +64,11 @@ export const TrainingModeComponent: FC = () => {
               </h3>
 
               <div className="space-y-3">
-                {selectedOption !== null &&
-                  Object.entries(feedback[(selectedOption + 1) as keyof typeof feedback].scores).map(([key, value]) => (
+                {(feedback &&selectedOption !== null) &&
+                  Object.entries(feedback.result).map(([key, value]) => (
                     <div key={key} className="space-y-1">
                       <div className="flex justify-between">
-                        <span className="capitalize">{key}</span>
+                        <span className="capitalize">{translateResults[key as keyof typeof translateResults]}</span>
                         <span>{value}/100</span>
                       </div>
                       <Progress value={value} className="h-2" />
