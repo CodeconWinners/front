@@ -1,14 +1,18 @@
 import { RaitingMeetingEnum } from "@/shared/enums/RaitingMeetingEnum"
 import type { ITranscription } from "@/shared/interfaces/ITranscription"
+import { LocalStorageService } from "@/shared/services/LocalStorageService"
 import { MeetingService } from "@/shared/services/MeetingService"
 import { CalendarClient } from "@/shared/utils/Axios"
 import { useState } from "react"
+import { toast } from "react-toastify"
 
 export const useAnalyzePopupFunctions = () => {
 
-    const [transcription, setTranscription] = useState<string | null>(null)
-    const [analysis, setAnalysis] = useState<string | null>(null)
-    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [transcription, setTranscription] = useState<string | null>(null);
+    const [analysis, setAnalysis] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
+    const {get} = LocalStorageService();
 
     const getStatusColor = (status: RaitingMeetingEnum) => {
         switch (status) {
@@ -28,8 +32,13 @@ export const useAnalyzePopupFunctions = () => {
     const getAnalysis = async (meetTranscription: string) => {
         const transcriptionParsed = JSON.parse(meetTranscription) as ITranscription
         setIsLoading(true)
-        const response = await MeetingService(CalendarClient).getAnalysis(transcriptionParsed)
-        setAnalysis(response.data.items.details.transcriptionMessage)
+        const userId = get("userId");
+        if(userId) {
+            const response = await MeetingService(CalendarClient).getAnalysis(transcriptionParsed,userId);
+            setAnalysis(response.data.items.details.transcriptionMessage)
+        }else {
+            toast.error("Ops, acho que não conseguimos fazer a transcrição no momento!!!!")
+        }
         setIsLoading(false)
     }
 
