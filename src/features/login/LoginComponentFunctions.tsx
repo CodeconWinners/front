@@ -44,8 +44,7 @@ export const useLoginComponentFunctions = () => {
                         set("userId", response.data.userId);
                         initializeAnalizeAll(response.data.userId)
                             .then(() => {
-                                const userObjct = {...user};
-                                saveUserDb({...userObjct, userId: response.data.userId})
+            
                             })
                             .finally(() => {
                                 setLoading(false)
@@ -63,10 +62,6 @@ export const useLoginComponentFunctions = () => {
         if (user && user[field] !== value) {
             setUser(prevValues => ({ ...prevValues, [field]: value }));
         }
-    }
-
-    const saveUserDb = (object: SaveUserDto) => {
-        saveUser(object)
     }
 
     return {
