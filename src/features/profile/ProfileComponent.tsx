@@ -91,7 +91,7 @@ export const ProfileComponent: FC = () => {
                 </Card>
             </div>
             <div className="mt-6">
-                <Button variant={"default"} onClick={save}>
+                <Button variant={"default"} onClick={save} disabled={loading ? true : false}>
                     {loading ? (
                         <>
                             salvando
