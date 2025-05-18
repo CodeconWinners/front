@@ -11,4 +11,13 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  // server: {
+  //   proxy: {
+  //     '/api/user': {
+  //       target: 'http://desabafa-dev-2.us-east-1.elasticbeanstalk.com',
+  //       changeOrigin: true,
+  //       rewrite: path => path.replace(/^\/api\/user/, '/api'),
+  //     },
+  //   },
+  // }
 })
