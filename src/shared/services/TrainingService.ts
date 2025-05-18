@@ -6,7 +6,7 @@ import type { ITraining } from "../interfaces/ITraining"
 export const TrainingService = (fetch: Axios) => {
 
     return {
-        getTraining(): AxiosPromise<{training: ITraining}> {
+        getTraining(): AxiosPromise<ITraining> {
             return fetch.get('/training/generate')
         }
     }

@@ -23,17 +23,17 @@ export const TrainingModeComponent: FC = () => {
             <Card>
               <CardContent className="p-4">
                 <h2 className="font-medium mb-2">Situação:</h2>
-                <p>{scenario.situation}</p>
+                <p>{scenario && scenario.situation}</p>
               </CardContent>
             </Card>
 
             <div className="space-y-3">
               <h3 className="font-medium">Escolha sua resposta:</h3>
-              {scenario.options.map((option, index) => (
+              {scenario && scenario.options.map((option, index) => (
                 <Button
                   key={index}
                   variant="outline"
-                  className="w-full justify-start h-auto p-4 text-left"
+                  className="w-full justify-start h-auto p-4 text-left whitespace-pre-wrap"
                   onClick={() => handleSelectOption(index)}
                 >
                   {option}
@@ -46,7 +46,7 @@ export const TrainingModeComponent: FC = () => {
             <Card>
               <CardContent className="p-4">
                 <h2 className="font-medium mb-2">Sua escolha:</h2>
-                <p>{selectedOption !== null && scenario.options[selectedOption]}</p>
+                <p>{selectedOption !== null && scenario && scenario.options[selectedOption]}</p>
               </CardContent>
             </Card>
 
