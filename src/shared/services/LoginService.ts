@@ -1,4 +1,5 @@
 import type { Axios, AxiosPromise } from "axios"
+import type { SaveUserDto } from "../dtos/SaveUserDto"
 
 
 export const LoginService = (fetch: Axios) => {
@@ -17,6 +18,9 @@ export const LoginService = (fetch: Axios) => {
                     userId
                 }
             })
+        },
+        saveUser(userObject:SaveUserDto) {
+            return fetch.post('/api/profile', userObject);
         }
     }
-}
+} 

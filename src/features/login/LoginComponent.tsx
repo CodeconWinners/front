@@ -3,10 +3,11 @@ import animation from "@/assets/animations/Animation - 1747518971256.json";
 import { useLoginComponentFunctions } from "./LoginComponentFunctions";
 import { ToastContainer } from "react-toastify";
 import type { FC } from "react";
+import { Input } from "@/components/ui/input";
 
 export const LoginComponent: FC = () => {
 
-    const { scale, loading } = useLoginComponentFunctions();
+    const { scale, loading, changedValue, user } = useLoginComponentFunctions();
 
     return (
         <>
@@ -57,9 +58,53 @@ export const LoginComponent: FC = () => {
                         )}
                         <p className="opacity-35">IA é sigilosa. Diferente do seu grupo da firma.</p>
                     </div>
-                    <a href="https://fa-google-integration.azurewebsites.net/api/google/auth/consent" target="_self" className="cursor-pointer bg-primary text-white p-2 rounded-md">
-                        Logar <i className="fab fa-google"></i>
-                    </a>
+                    <div className="grid grid-cols-2 lg:grid-cols-12 md:grid-cols-12 gap-2 w-full">
+                        <fieldset className="w-full text-start col-span-6">
+                            <label>Nome</label>
+                            <Input
+                                value={user.name}
+                                onChange={(event) => changedValue("name", event.target.value)}
+                            />
+                        </fieldset>
+                        <fieldset className="w-full text-start col-span-6">
+                            <label>Sobrenome</label>
+                            <Input
+                                value={user.lastName}
+                                onChange={(event) => changedValue("name", event.target.value)}
+                            />
+                        </fieldset>
+                        <fieldset className="w-full text-start col-span-6">
+                            <label>email</label>
+                            <Input
+                                value={user.email}
+                                onChange={(event) => changedValue("name", event.target.value)}
+                            />
+                        </fieldset>
+                        <fieldset className="w-full text-start col-span-6">
+                            <label>Cargo</label>
+                            <Input
+                                value={user.jobTitle}
+                                onChange={(event) => changedValue("name", event.target.value)}
+                            />
+                        </fieldset>
+                        <fieldset className="w-full text-start col-span-6">
+                            <label>Descrição</label>
+                            <Input
+                                value={user.jobDescription}
+                                onChange={(event) => changedValue("name", event.target.value)}
+                            />
+                        </fieldset>
+
+                    </div>
+                    {Object.entries(user).every(prop => prop.length > 0) && (
+                        <a 
+                            href="https://fa-google-integration.azurewebsites.net/api/google/auth/consent" 
+                            target="_self" className="cursor-pointer bg-primary text-white p-2 rounded-md"
+                            
+                            >
+                            Logar <i className="fab fa-google"></i>
+                        </a>
+                    )}
                 </div>
             </div>
         </>
