@@ -18,7 +18,8 @@ export const CalendarComponent: FC = () => {
         getStatusColor,
         selectedDate,
         getDayStatus,
-        getStatusIndicatorColor,
+        getDayPredictionRating,
+        getRatingColor,
         prevMonth,
         setSelectedDate,
         monthData,
@@ -77,8 +78,9 @@ export const CalendarComponent: FC = () => {
                                             day.date.getMonth() === selectedDate.getMonth() &&
                                             day.date.getFullYear() === selectedDate.getFullYear()
 
-                                        const dayStatus = getDayStatus(day.date)
-                                        const statusColor = getStatusIndicatorColor(dayStatus)
+                                        
+                                        const dayPredictionRating = getDayPredictionRating(day.date)
+                                        const statusColor = getRatingColor(dayPredictionRating!)
                                         const hasIndicator = hasMeetings(day.date)
 
                                         return (
@@ -156,7 +158,7 @@ export const CalendarComponent: FC = () => {
                                                             <div className="flex flex-col space-y-2">
                                                                 <div className="flex justify-between items-start">
                                                                     <h3 className="font-medium">{meeting.title}</h3>
-                                                                    <Badge className={getStatusColor(meeting.rating)}>{meeting.rating}</Badge>
+                                                                    <Badge className={getStatusColor(meeting.status)}>{meeting.status}</Badge>
                                                                 </div>
                                                                 <p className="text-sm text-muted-foreground">{meeting.time}</p>
                                                                 <p className="text-sm">{meeting.description}</p>
