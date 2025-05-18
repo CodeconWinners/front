@@ -39,7 +39,7 @@ export const AnalyzePopupComponent: FC<AnalyzePopupComponentProps> = ({ meeting 
                 <Textarea className="h-[150px] resize-none" value={transcription || ""} onChange={(e) => setTranscription(e.target.value)} placeholder="Cole a Transcrição da Reunião Aqui..." />
             </div>
             <div className="flex flex-col gap-4 mb-8">
-                <Button variant="default" onClick={() =>transcription && getAnalysis(transcription)}>Analizar Reunião</Button>
+                <Button variant="default" onClick={() =>transcription && getAnalysis(transcription, meeting.id)}>Analizar Reunião</Button>
                 {isLoading && (
                     <div className="flex justify-center items-center">
                         <Loader2 className="w-4 h-4 animate-spin" />

@@ -49,12 +49,12 @@ export const useAnalyzePopupFunctions = () => {
 
 
 
-    const getAnalysis = async (meetTranscription: string) => {
+    const getAnalysis = async (meetTranscription: string, eventId: string) => {
         const transcriptionParsed = JSON.parse(meetTranscription) as ITranscription
         setIsLoading(true)
         const userId = get("userId");
         if (userId) {
-            const response = await MeetingService(CalendarClient).getAnalysis(transcriptionParsed, userId);
+            const response = await MeetingService(CalendarClient).getAnalysis(transcriptionParsed, userId, eventId);
             setAnalysis(response.data.items.details.transcriptionMessage)
         } else {
             toast.error("Ops, acho que não conseguimos fazer a transcrição no momento!!!!")
