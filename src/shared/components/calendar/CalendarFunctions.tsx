@@ -5,6 +5,7 @@ import type { IMeeting } from "@/shared/interfaces/IMeeting"
 import { CalendarService } from "@/shared/services/CalendarService"
 import { LocalStorageService } from "@/shared/services/LocalStorageService"
 import {CalendarClient} from "@/shared/utils/Axios"
+import { sanetizeText } from "@/shared/utils/sanetizeText"
 // import { CalendarService } from "@/shared/services/CalendarService"
 import { format } from 'date-fns'
 import { useEffect, useState } from "react"
@@ -29,11 +30,8 @@ export const useCalendarFunctions = () => {
     const loadingMeetings = (date: string) => {
         const userId = get("userId");
         if(userId) {
-            getEvents(date, userId)
+            getEvents(date, "")
             .then((response) => {
-                // console.log('bbbbbbbb ::> ', response.data.items)
-                // const teste = formatCalendar(response.data.items);
-                // console.log('aaaaa ::> ', teste)
                 setMeetingData(formatCalendar(response.data.items))
             })
         }
@@ -215,7 +213,12 @@ export const useCalendarFunctions = () => {
         }).format(date)
     }
 
-    const weekDays = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"]
+    const weekDays = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+
+
+    const sanitize = (text: string) => {
+        return sanetizeText(text)
+    }
 
     return {
         currentMonth,
@@ -232,5 +235,6 @@ export const useCalendarFunctions = () => {
         setSelectedDate,
         hasMeetings,
         formatDate,
+        sanitize
     }
 }

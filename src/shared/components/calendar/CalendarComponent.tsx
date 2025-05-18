@@ -27,6 +27,7 @@ export const CalendarComponent: FC = () => {
         weekDays,
         filteredMeetings,
         formatDate,
+        sanitize,
         hasMeetings
     } = useCalendarFunctions();
 
@@ -161,7 +162,7 @@ export const CalendarComponent: FC = () => {
                                                                     <Badge className={getStatusColor(meeting.status)}>{meeting.status}</Badge>
                                                                 </div>
                                                                 <p className="text-sm text-muted-foreground">{meeting.time}</p>
-                                                                <p className="text-sm">{meeting.description}</p>
+                                                                <p className="text-sm">{sanitize(meeting.description)}</p>
                                                             </div>
                                                        {isMeetingActionsEnabled && (
                                                         <OptionsMeetingComponent
